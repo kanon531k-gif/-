@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#21180f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="航海記録">
+<link rel="manifest" href="manifest.webmanifest">
+<title>THE GRAND LINE LOG</title>
+<style>
+:root{--ink:#2a1b12;--brown:#6d4528;--paper:#f0dfb6;--paper2:#e4c995;--red:#8e2720;--gold:#b48a43;--muted:#725b43}
+*{box-sizing:border-box}body{margin:0;background:#17120e;color:var(--ink);font-family:Georgia,"Yu Mincho","Hiragino Mincho ProN",serif;min-height:100vh}
+main{max-width:520px;margin:auto;padding:calc(18px + env(safe-area-inset-top)) 15px calc(28px + env(safe-area-inset-bottom))}
+.paper{position:relative;background:radial-gradient(ellipse at 20% 10%,#fff4d4 0,#f0dfb6 55%,#d9bd86 100%);border:3px double #805b31;outline:1px solid #c6a46b;outline-offset:-8px;padding:19px 17px 20px;box-shadow:0 12px 35px #0009}
+.paper:before,.paper:after{content:"";position:absolute;left:10px;right:10px;height:1px;background:#8b6b3d55}
+.paper:before{top:11px}.paper:after{bottom:11px}
+.top{text-align:center;border-bottom:2px solid var(--ink);padding-bottom:12px}
+.kicker{font-size:10px;letter-spacing:.26em;font-weight:bold;color:var(--red)}
+h1{font-size:27px;letter-spacing:.06em;margin:4px 0 2px;font-weight:900}
+.jp{font-size:11px;letter-spacing:.22em;color:var(--muted)}
+.skull{font-size:40px;line-height:1.2;margin:10px 0 2px}
+.poster-label{text-align:center;font-size:12px;letter-spacing:.22em;font-weight:bold;margin:13px 0 3px}
+.wanted{font-family:Georgia,serif;text-align:center;font-size:45px;line-height:1;font-weight:900;letter-spacing:.04em;margin:0;color:#21170f;text-shadow:1px 1px #b99a65}
+.current{text-align:center;font-size:29px;font-weight:900;margin:9px 0 0;font-variant-numeric:tabular-nums}
+.current small{font-size:14px}
+.progressline{height:13px;border:1px solid #694b2d;background:#b89b6c;margin:11px 2px 5px;padding:2px}
+.fill{height:100%;width:0;background:repeating-linear-gradient(135deg,#8e2720 0,#8e2720 7px,#a83a30 7px,#a83a30 14px)}
+.percent{text-align:center;font-size:12px;font-weight:bold;color:var(--red)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.stat{border:1px solid #8d6b3c;padding:9px;text-align:center;background:#fff2d2a8}
+.stat small{display:block;font-size:10px;color:var(--muted);letter-spacing:.1em}
+.stat strong{display:block;font-size:18px;margin-top:3px}
+.section{margin-top:15px;border:2px solid #805b31;background:#ead5a8;padding:14px;box-shadow:inset 0 0 0 3px #f6e8c8}
+.section h2{font-size:15px;margin:0 0 10px;border-bottom:1px solid #a17d4b;padding-bottom:7px;letter-spacing:.08em}
+label{display:block;font-size:11px;font-weight:bold;margin:9px 0 5px;color:#59412a}
+input{width:100%;border:1px solid #87663d;background:#f8edcf;color:#2a1b12;border-radius:2px;padding:12px;font: bold 18px Georgia,serif}
+button{font-family:inherit;font-weight:bold;cursor:pointer;border:1px solid #5a1b16}
+.primary{background:var(--red);color:#fff0d0;width:100%;padding:13px;margin-top:11px;font-size:14px;letter-spacing:.08em;box-shadow:0 3px 0 #4a1713}
+.quickrow{display:flex;gap:7px;margin-top:8px}.quick{flex:1;background:#3a2a1d;color:#f4dfb2;padding:10px 4px}
+.record{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed #9c7c4e;font-size:12px}.record:last-child{border:0}.record span{color:#735638}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.badge{border:1px solid #9a7745;padding:6px 8px;font-size:10px;background:#f8edcf}.badge.locked{opacity:.38;filter:grayscale(1)}
+.note{font-size:10px;line-height:1.6;color:#725b43;margin-top:10px}
+.footer{text-align:center;color:#c6a46b;font-size:10px;letter-spacing:.2em;margin:18px 0}
+</style>
+</head>
+<body><main>
+<section class="paper">
+ <div class="top">
+  <div class="kicker">WORLD GOVERNMENT • CONFIDENTIAL</div>
+  <h1>THE GRAND LINE LOG</h1>
+  <div class="jp">我が航海の記録</div>
+  <div class="skull">☠️</div>
+  <div class="poster-label">WANTED • DEAD OR ALIVE</div>
+  <div class="wanted">WANTED</div>
+  <div class="current"><span id="epBig">78</span><small> / <span id="targetBig">1180</span> EPISODES</small></div>
+  <div class="progressline"><div class="fill" id="fill"></div></div>
+  <div class="percent" id="percent">進捗 6.6%</div>
+  <div class="stats">
+   <div class="stat"><small>REMAINING • 残り</small><strong id="remaining">1,102話</strong></div>
+   <div class="stat"><small>NEXT BOUNTY • 次の目標</small><strong id="next">100話</strong></div>
+  </div>
+ </div>
+ <section class="section">
+  <h2>📜 航海記録を更新する</h2>
+  <label for="episode">現在見終わった話数</label>
+  <input id="episode" type="number" min="0" max="9999" value="78" inputmode="numeric">
+  <div class="quickrow"><button class="quick" data-add="1">＋1話</button><button class="quick" data-add="5">＋5話</button><button class="quick" data-add="10">＋10話</button></div>
+  <label for="target">目標話数（最新話に合わせて変更OK）</label>
+  <input id="target" type="number" min="1" max="9999" value="1180" inputmode="numeric">
+  <button class="primary" id="save">記録を刻む！</button>
+  <div class="note">入力した話数はこのiPhoneのブラウザ内に保存されるよ。同じSafariで開いて使ってね。</div>
+ </section>
+ <section class="section">
+  <h2>🧭 CURRENT VOYAGE • 現在地</h2>
+  <div class="record"><span>航海メモ</span><strong>リトルガーデン脱出直後</strong></div>
+  <div class="record"><span>次のチェックポイント</span><strong id="checkpoint">第100話</strong></div>
+  <div class="record"><span>映画公開目安</span><strong>2027年夏</strong></div>
+  <label for="memo">自分だけの航海メモ</label>
+  <input id="memo" placeholder="例：次は第79話から！">
+  <button class="primary" id="saveMemo">メモを保存</button>
+ </section>
+ <section class="section">
+  <h2>🏅 BOUNTY RANK • 到達記録</h2>
+  <div class="badges" id="badges"></div>
+  <div class="note">100話ごとに新しい称号が解放される！</div>
+ </section>
+</section>
+<div class="footer">SET SAIL • KEEP YOUR OWN LOG</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let d={episode:78,target:1180,memo:""};
+try{d={...d,...JSON.parse(localStorage.getItem("grandLineLog")||"{}")}}catch(e){}
+const ranks=[100,200,300,400,500,600,700,800,900,1000,1100,1180];
+function nextMark(n,t){let m=Math.ceil((n+1)/100)*100;return Math.min(t,m)}
+function render(){
+ let n=Math.max(0,Number(d.episode)||0),t=Math.max(1,Number(d.target)||1),p=Math.min(100,n/t*100);
+ $("epBig").textContent=n.toLocaleString("ja-JP");$("targetBig").textContent=t.toLocaleString("ja-JP");
+ $("percent").textContent="進捗 "+p.toFixed(1)+"%";$("fill").style.width=p+"%";
+ $("remaining").textContent=Math.max(0,t-n).toLocaleString("ja-JP")+"話";
+ $("next").textContent=n>=t?"制覇！":nextMark(n,t)+"話";
+ $("checkpoint").textContent=n>=t?"最新話到達！":"第"+nextMark(n,t)+"話";
+ $("episode").value=n;$("target").value=t;$("memo").value=d.memo||"";
+ $("badges").innerHTML=ranks.filter(x=>x<=t).map(x=>`<span class="badge ${n>=x?"":"locked"}">${n>=x?"★":"🔒"} ${x}話</span>`).join("");
+}
+function persist(){d.episode=Math.max(0,Number($("episode").value)||0);d.target=Math.max(1,Number($("target").value)||1);localStorage.setItem("grandLineLog",JSON.stringify(d));render()}
+$("save").addEventListener("click",persist);
+document.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>{$("episode").value=(Number($("episode").value)||0)+Number(b.dataset.add);persist()}));
+$("saveMemo").addEventListener("click",()=>{d.memo=$("memo").value;localStorage.setItem("grandLineLog",JSON.stringify(d));$("saveMemo").textContent="保存完了！";setTimeout(()=>$("saveMemo").textContent="メモを保存",1200)});
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+render();
+</script></body></html>

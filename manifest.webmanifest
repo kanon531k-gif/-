@@ -1,0 +1,10 @@
+{
+  "name": "THE GRAND LINE LOG",
+  "short_name": "航海記録",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#17120e",
+  "theme_color": "#21180f",
+  "lang": "ja",
+  "icons": []
+}
